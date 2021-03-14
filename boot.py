@@ -4,4 +4,4 @@ esp.osdebug(None)
 import webrepl
 webrepl.start()
 import main
-program = main.Main()
+#program = main.Main()
