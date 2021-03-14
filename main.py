@@ -31,10 +31,11 @@ class Main:
     def Loop(self):
         while 1==1:
             for i in class_handler_list:
-                i.Update()
-                print(i)
-        print("loop")
-        time.sleep_ms(500)
+                if not i.suppress:
+                    i.Update()
+                    print(i)
+            print("next frame")
+            time.sleep_ms(50)
         #self.Loop() #for recursion
             
 #p = Main()

@@ -1,6 +1,8 @@
 class ClassHandler():
+    suppress = False
     def __init__(self,name="no name"):
         self.name = name
+        
     def Start(self):
         print(self.__str__(), "instantiated")
     def Update(self):
