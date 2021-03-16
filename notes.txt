@@ -1,3 +1,6 @@
 esptool --chip esp32 --port COM3 erase_flash
 esptool --chip esp32 --port COM3 --baud 460800 write_flash -z 0x1000 esp32-idf3-20210202-v1.14.bin
+
 https://micropython.org/download/esp32/
+https://github.com/espressif/esptool
+https://learn.adafruit.com/micropython-basics-load-files-and-run-code/install-ampy

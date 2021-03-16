@@ -22,10 +22,12 @@ class Main:
                 class_handler_list.remove(i)
         self.Setup()
         self.Loop()
+        
     def Setup(self):
         print("runs once")
         for i in class_handler_list:
-                i.Start()
+            print(i)
+            i.Start()
                 
         
     def Loop(self):
