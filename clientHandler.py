@@ -10,6 +10,7 @@ class ClientHandler(classHandler.ClassHandler):
     message_to_send = ""
     #network_handler
     has_tcp = False
+    sustain = True
     
     def __init__(self,name = None,network_handler = None,server_ip = None,port = None):
         super(ClientHandler, self).__init__()
@@ -22,7 +23,7 @@ class ClientHandler(classHandler.ClassHandler):
         print(self.name,"starting client tcp send")
         self.establish_tcp()
         #try:
-        self.write("myIP"+str(self.network_handler.get_ip_info()[0]))
+        self.write("name:"+str(self.name))
         #except:
         print("send success")
           
@@ -42,7 +43,7 @@ class ClientHandler(classHandler.ClassHandler):
     def listen(self):
         self.has_tcp = True
         self.write("myIP"+str(self.network_handler.get_ip_info()[0]))
-        while 1==1:
+        while self.sustain:
             data_in = self.sock.recv(500)
             if len(data_in)>0:
                 self.message_recv = data_in

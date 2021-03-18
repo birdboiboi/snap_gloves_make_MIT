@@ -2,39 +2,82 @@
 import socket
 from threading import Thread
 import clientStorage
+import sys
+
+sys.stdout.flush()
 
 class Server():
     kill = False
     client_list = []
+    
     def __init__(self,ip_add = '10.0.0.64',port = 8080):
         self.ip_add = ip_add
         self.port = port
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.s.bind((ip_add, port))
         self.s.listen(5)
+        self.cmd_dict = {"KILL":self.kill_all,"":self.pass_this}
         #self.s.bind((self.ip_add,self.port))
+        print("server init")
         
     def run(self):
+        t = Thread(target =self.check_input)
+        t2 = Thread(target = self.handle_server)
+        t2.daemon = True
+        t.start()
+        t2.start()
+        print("run")
+        
+            
+            
+        #t.join()
+        t2.join()
+        
+    def handle_server(self):
         while not self.kill:
-            c = self.s.accept()[0]
-            addr= self.s.accept()[1]
-            print("c",c)
-            print ("addr",addr)
+            print("accepting")
+
+            c,addr = self.s.accept()
+            sys.stdout.flush()
             idx = self.check_client_list(addr)
+
+            #sys.stdout.flush()
             if idx != -1:                           #address,connection
+                print("--existing--")
                 self.client_list[idx].set_add_connect(addr,c)
+                print("existing")
             else:
-                                                                    #socket_server,address,connection
-                self.client_list.append(clientStorage.ClientStorage(self.s,addr,c))
-            self.client_list[idx].send_msg("200 OK")
-            self.client_list[idx].run()
+                print("--new--")                                                   #socket_server,address,connection
+                self.client_list.append(clientStorage.ClientStorage(self.s,addr,c))    
+                print(self.client_list)        
+                self.client_list[idx].send_msg("200 OK")
+                self.client_list[idx].send_msg("stupid follow up")
+                self.client_list[idx].on_connect()
+            
         self.s.close()
         
     def check_client_list(self,addr):
         for client in self.client_list:
-            if client == addr:
+            print("this",addr)
+            print("in class client",client.address)
+            if client.address == addr:
                 return self.client_list.index(client)
         return -1
         
+    def check_input(self):
+        while not self.kill:
+            
+            sys.stdout.flush()
+            cmd = input("input cmd: ")
+            if cmd == None:
+                cmd = ""
+            self.cmd_dict[cmd.upper()]()
+            print(len(self.client_list),"clients connected")
+        
+    def kill_all(self):
+        self.kill = True
+        
+    def pass_this(self):
+        pass
 ser = Server(ip_add = "10.0.0.64",port = 8080)
 ser.run()
