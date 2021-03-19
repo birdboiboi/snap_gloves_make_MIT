@@ -11,7 +11,7 @@ class UnitTestNetworkHandler(clientHandler.ClientHandler):
         super(UnitTestNetworkHandler, self).__init__(name,network_handler,server_ip,port)
         self.sustain = False
         
-    def Update(self):
-        print("ask")
-        self.write(self,"are you listening?")
+    #def Update(self):
+     #   print("ask")
+      #  self.write(self,"are you listening?")
         

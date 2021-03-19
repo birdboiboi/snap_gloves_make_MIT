@@ -12,12 +12,14 @@ class ClientStorage():
     t_this = None
     mac_id = ""
     
+    
     def __init__(self,socket_server,address,connection,bytes_to_recv = 1024):
         self.socket_server = socket_server
         self.address = address
         self.connection = connection
         self.bytes_to_recv = bytes_to_recv
         print("start server")
+        self.headers_dict = {"GLOVE":self.set_id_glove,"":self.pass_this}
         #self.send_msg()
         
     def set_add_connect(self,address,connection):
@@ -48,6 +50,7 @@ class ClientStorage():
         
         if len(data)>0:
             self.message = data
+            self.process_data(self.message)
             print("msg" +self.message)
                 
          
@@ -64,9 +67,22 @@ class ClientStorage():
             #threading.threads.append(t_this)
         self.t_this.start()
         self.t_this.join()
-        self.connection.close()    
+        self.connection.close() 
+        
     def process_data(self,string_to_process):
-        pass
+        print("process_data",string_to_process)
+        string_to_process = string_to_process.split(":")
+        print(string_to_process[1])
+        self.headers_dict[string_to_process[0]](string_to_process[1])
+        
+    def set_id_glove(self,id_given):
+        print("init glove",id_given)
+        self.mac_id = id_given
+        print(self.mac_id)
+        
+        
+    def pass_this(self):
+        pass   
         
     def run(self):
         print("****************")

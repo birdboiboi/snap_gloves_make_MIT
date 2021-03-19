@@ -7,7 +7,7 @@ class ClientHandler(classHandler.ClassHandler):
     #https://docs.micropython.org/en/latest/esp8266/tutorial/network_tcp.html
     #network_handler = NH.NetworkHandler()
     message_recv = ""
-    message_to_send = ""
+    message_to_send = "GLOVE:empty"
     #network_handler
     has_tcp = False
     sustain = True
@@ -21,9 +21,12 @@ class ClientHandler(classHandler.ClassHandler):
         
     def Start(self):
         print(self.name,"starting client tcp send")
+        self.message_to_send = "GLOVE:"+str(self.name)
         self.establish_tcp()
         #try:
-        self.write("name:"+str(self.name))
+        
+        print(self.message_to_send)
+        self.write()
         #except:
         print("send success")
           
@@ -35,14 +38,17 @@ class ClientHandler(classHandler.ClassHandler):
         
         print("no tcp connection made on", self.addr_info[0][-1])
     
-    def write(self,message_to_send):
+    def write(self,message_to_send= None):
         print("attempting to send ",message_to_send," to " , self.addr_info) 
         if self.has_tcp:
-            self.sock.send(message_to_send)
+            if message_to_send != None:
+                self.sock.send(message_to_send)
+            else:
+                self.sock.send(self.message_to_send)
         
     def listen(self):
         self.has_tcp = True
-        self.write("myIP"+str(self.network_handler.get_ip_info()[0]))
+        self.write()
         while self.sustain:
             data_in = self.sock.recv(500)
             if len(data_in)>0:

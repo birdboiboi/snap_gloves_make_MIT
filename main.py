@@ -3,14 +3,16 @@ import time
 import os
 
 #
+import clientHandler
 import classHandlerList as CHL
 class_handler_list = CHL.get_list_of_imports()
-def run():
-    p = Main()
+def run(machineName = None):
+    p = Main(machineName)
 
 class Main:
-    def __init__(self):
+    def __init__(self,this_mac_name = None):
         print("****************program*************")
+        self.this_mac_name = this_mac_name
         self.Boot()
         
     def Boot(self):
@@ -26,6 +28,10 @@ class Main:
     def Setup(self):
         print("runs once")
         for i in class_handler_list:
+            if type(i) == clientHandler.ClientHandler:
+                
+                i.name = self.this_mac_name
+                print(i)
             print(i)
             i.Start()
                 
