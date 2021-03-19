@@ -19,12 +19,16 @@ class ClientStorage():
         self.connection = connection
         self.bytes_to_recv = bytes_to_recv
         print("start server")
-        self.headers_dict = {"GLOVE":self.set_id_glove,"":self.pass_this}
+        self.headers_dict = {"GLOVE":self.set_id_glove,
+                                "":self.pass_this,
+                                "CMD_IOT":self.IOT_CMD,
+                                "CMD_ROBOT":self.ROBOT_CMD}
         #self.send_msg()
         
     def set_add_connect(self,address,connection):
         self.address = address
         self.connection = connection
+        self.on_connect()
         print("set_add_connect")
         
     def send_msg(self,msg = None):
@@ -62,9 +66,9 @@ class ClientStorage():
     def on_connect(self):
         #while self.sustain:
         sys.stdout.flush()
-        self.send_msg("bird")
         self.t_this = threading.Thread(target = self.recv_msg)
             #threading.threads.append(t_this)
+        self.send_msg("echo"+self.message)
         self.t_this.start()
         self.t_this.join()
         self.connection.close() 
@@ -81,8 +85,18 @@ class ClientStorage():
         print(self.mac_id)
         
         
-    def pass_this(self):
+    def pass_this(self,CMD):
         pass   
+        
+    def IOT_CMD(self,CMD):
+        print("CURL",CMD)
+        self.message = CMD
+        pass
+        
+    def ROBOT_CMD(self,CMD):
+        print("ROBOT_CMD",CMD)
+        self.message = CMD
+        pass
         
     def run(self):
         print("****************")

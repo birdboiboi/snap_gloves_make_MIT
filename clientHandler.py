@@ -22,22 +22,24 @@ class ClientHandler(classHandler.ClassHandler):
     def Start(self):
         print(self.name,"starting client tcp send")
         self.message_to_send = "GLOVE:"+str(self.name)
-        self.establish_tcp()
-        #try:
-        
-        print(self.message_to_send)
-        self.write()
-        #except:
+        self.post(self.message_to_send)
         print("send success")
           
     def establish_tcp(self):
         self.sock = socket.socket()
         print("attempting connecting to ",self.addr_info) 
         self.sock.connect(self.addr_info[0][-1])
-        _thread.start_new_thread(self.listen())
-        
-        print("no tcp connection made on", self.addr_info[0][-1])
+        #_thread.start_new_thread(self.listen())
     
+    def post(self,msg=None):
+        self.establish_tcp()
+        self.message_to_send = msg
+        print(self.message_to_send)
+        self.write()
+        self.listen()
+        print(" connection made on", self.addr_info[0][-1])
+
+        
     def write(self,message_to_send= None):
         print("attempting to send ",message_to_send," to " , self.addr_info) 
         if self.has_tcp:
@@ -49,11 +51,14 @@ class ClientHandler(classHandler.ClassHandler):
     def listen(self):
         self.has_tcp = True
         self.write()
-        while self.sustain:
-            data_in = self.sock.recv(500)
-            if len(data_in)>0:
-                self.message_recv = data_in
-                print("message",self.message_recv)
-            
+        print("listen")
+        #while self.sustain:
+        data_in = self.sock.recv(500)
+        if len(data_in)>0:
+            self.message_recv = data_in
+            print("message",self.message_recv)
+                #self.sustain = False
+        self.sock.close()    
+        
     def Update(self):
         suppress = True

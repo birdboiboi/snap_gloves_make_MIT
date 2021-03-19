@@ -1,4 +1,3 @@
-
 import socket
 from threading import Thread
 import clientStorage
@@ -82,11 +81,13 @@ class Server():
         for client in self.client_list:
             client.sustain =False
         print ("connect again to kill process")
+        
     def pass_this(self):
         pass
+        
     def list_all(self):
         print( self.client_list)
         for client in self.client_list:
-            print("machine name",client.mac_id)
+            print("machine name",client.mac_id,"msg",client.message)
 ser = Server(ip_add = "10.0.0.64",port = 8080)
 ser.run()
