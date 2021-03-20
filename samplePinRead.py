@@ -18,7 +18,7 @@ class SamplePinRead(classHandler.ClassHandler):
                  pull_up=[],
                  pull_down=[]):
         super(SamplePinRead, self).__init__()
-        name = "no name"
+        self.name = name
         self.pin_out = pin_out
         self.pin_in = pin_in
         self.pull_up =pull_up
