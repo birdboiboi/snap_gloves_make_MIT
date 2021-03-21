@@ -11,7 +11,7 @@ class I2c_MOD_Multi(SamplePinRead):
     #HARD_I2C = [21,22]
     HARD_I2C = []
     i2c_list= []
-    suppress_print = False
+    suppress_print = True
     def __init__(self,name = "no name",
                  pin_out =[],
                  pin_in=[],
@@ -68,7 +68,7 @@ class I2c_MOD_Multi(SamplePinRead):
             #time.sleep_ms(500)
             I2c_mod.Read()
             I2c_mod.toggle_on_off()
-            I2c_mod.parse()
+            #I2c_mod.parse()
             
     
     def __str__(self):
