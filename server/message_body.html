@@ -1,0 +1,42 @@
+<html>
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<h2>My Portal</h2>
+
+<p id="demo"></p>
+
+<script>
+function handleData(data){
+var obj = JSON.parse(JSON.stringify(data));
+console.log(obj);
+//$("#user").text(obj.data.messages[0].to)
+}
+
+$( document ).ready(function() {
+    console.log( "ready!" );
+    $( "#target" ).click(function() {
+  console.log( "Handler for .click() called." );
+     $.ajax({
+    type: "POST",
+    url: "/send-help",
+    success: handleData
+    
+  
+});
+});
+});
+
+</script>
+
+<button type="button" id="target">Help Needed</button>
+<p> <span id=user></span>  </p>
+ 
+</body>
+
+
+</html> 
