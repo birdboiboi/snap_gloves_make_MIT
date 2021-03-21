@@ -13,8 +13,8 @@ app = Flask(__name__)
 def textSender():
 
     configuration = clicksend_client.Configuration()
-    configuration.username = ''
-    configuration.password = ''
+    configuration.username = 'anjali.sridharan8@utexas.edu'
+    configuration.password = '8795E849-797B-BBB3-B2F2-92E6B375E408'
 
 
     # create an instance of the API class

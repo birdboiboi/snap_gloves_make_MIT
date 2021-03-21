@@ -18,6 +18,7 @@ class ClientStorageFlask (ClientStorage):
                                 "CMD_ROBOT":self.ROBOT_CMD}
         #self.send_msg()
     def IOT_CMD(self,CMD):
+        print("sending on FLASK")
         self.message = CMD
         Text_feature.run()
         pass

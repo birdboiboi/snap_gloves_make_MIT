@@ -66,7 +66,7 @@ class SamplePinRead(classHandler.ClassHandler):
             self.pin_mac_out[pin_num].value(self.write_vals[pin_num])
             
     def Update(self):
-        print("len",self.read_len)
+        #print("len",self.read_len)
         #print(self.read_pins)
         self.Read()
     def __str__(self):
