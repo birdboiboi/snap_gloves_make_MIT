@@ -6,7 +6,7 @@ from clientStorage import ClientStorage
 
 class ClientStorageFlask (ClientStorage):
     def __init__(self,socket_server,address,connection,bytes_to_recv = 1024):
-        super(ClientStorageFlask,self).__init__()
+        super(ClientStorageFlask,self).__init__(socket_server,address,connection,bytes_to_recv = 1024)
         self.socket_server = socket_server
         self.address = address
         self.connection = connection

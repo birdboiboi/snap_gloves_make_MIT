@@ -1,7 +1,10 @@
+#from __future__ import print_function
 import socket
 from threading import Thread
 import clientStorage
 import sys
+import clientStorageFlask 
+
 
 sys.stdout.flush()
 
@@ -47,7 +50,7 @@ class Server():
                 print("existing")
             else:
                 print("--new--")                                                   #socket_server,address,connection
-                self.client_list.append(clientStorage.ClientStorage(self.s,addr,c))    
+                self.client_list.append(clientStorageFlask.ClientStorageFlask(self.s,addr,c))    
                 print(self.client_list)        
                 self.client_list[idx].send_msg("200 OK")
                 self.client_list[idx].send_msg("stupid follow up")
@@ -89,5 +92,5 @@ class Server():
         print( self.client_list)
         for client in self.client_list:
             print("machine name",client.mac_id,"msg",client.message)
-ser = Server(ip_add = "10.0.0.64",port = 8080)
+ser = Server(ip_add = "192.168.68.141",port = 8080)
 ser.run()
