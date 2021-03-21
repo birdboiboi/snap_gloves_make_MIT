@@ -1,20 +1,15 @@
-from machine import Pin, I2C
-from samplePinRead import SamplePinRead
+from MPU6050 import imu
 from I2Chandler import I2c_MOD_Single_Soft
-#GPIO 21 - , GPIO
-class I2c_MOD_Single_Hard(I2c_MOD_Single_Soft):
-    data = ""
-    read_addr = 0x69
-    on_off= False
-    
+
+class mpu6050Handler(I2c_MOD_Single_Soft):
     def __init__(self,name = "no name",
-                 pin_out =[],
-                 pin_in=[],
-                 pull_up=[],
-                 pull_down=[],
-                 freq=57600
-                 ,
-                 byteBuffer = 10 ):
+                     pin_out =[],
+                     pin_in=[],
+                     pull_up=[],
+                     pull_down=[],
+                     freq=57600;
+                     byteBuffer=14
+                      ):
         super(I2c_MOD_Single_Hard,self).__init__(name = name,pin_out = pin_out,pin_in =pin_in,pull_up=pull_up,pull_down=pull_down)
         
         self.pin_out = pin_out
@@ -26,9 +21,5 @@ class I2c_MOD_Single_Hard(I2c_MOD_Single_Soft):
         self.sda=self.pin_mac_out[0]
         self.scl=self.pin_mac_out[0]
         self.ado =  self.pin_mac_out[1]
-        self.I2c_object = I2C(0,freq = self.freq)
         self.byteBuffer = byteBuffer
         
-    
-            
-  

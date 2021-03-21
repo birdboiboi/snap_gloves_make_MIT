@@ -11,7 +11,7 @@ class I2c_MOD_Single_Soft(SamplePinRead):
                  pull_up=[],
                  pull_down=[],
                  freq=100000,
-                 byteBuffer = 10 ):
+                 byteBuffer = 14 ):
         super(I2c_MOD_Single_Soft,self).__init__(name = name,pin_out = pin_out,pin_in =pin_in,pull_up=pull_up,pull_down=pull_down)
         self.pin_out = pin_out
         self.pin_in = pin_in
@@ -40,8 +40,11 @@ class I2c_MOD_Single_Soft(SamplePinRead):
         print("scan")
         print(self.I2c_object.scan() )
         print("readFrom",self.read_addr) 
-        self.data=str(self.I2c_object.readfrom(105, self.byteBuffer) ) 
+        self.data=str(self.I2c_object.readfrom_mem(105,0x3B, self.byteBuffer) ) 
         print(self.data)
-
+    
+    #def parse(self):
+    #    parse = self.data.split("\")
+    #    returnp =arse
          
         #return self.data
