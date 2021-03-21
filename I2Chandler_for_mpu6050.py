@@ -1,12 +1,19 @@
 from machine import Pin, SoftI2C
 from MPU6050 import imu
 from I2Chandler import I2c_MOD_Single_Soft
+from imuDataStruct import IMUDataVector
+from fusionHandler import FusionHandler
+from fusion import Fusion
+
 
 class mpu6050Handler(I2c_MOD_Single_Soft):
-    data = ""
+    data = None
     read_addr = 0x69
     on_off= False
-    parsedValue = ""
+    parsedValue = None
+    vect_data = IMUDataVector()
+    fuse = FusionHandler()
+    polar_coord_tup = None
     def __init__(self,name = "no name",
                  pin_out =[],
                  pin_in=[],
@@ -29,10 +36,13 @@ class mpu6050Handler(I2c_MOD_Single_Soft):
         self.I2c_object = SoftI2C(scl = self.scl,sda = self.sda,freq = self.freq)
         self.mpu6050_imu = imu( self.I2c_object, addr=0x69,handler=self)
         self.byteBuffer = byteBuffer
-    
+        
+        
     def Read(self):
         self.data=(self.mpu6050_imu.get_values())
-        print(self.data)
+        self.vect_data = IMUDataVector(self.data) 
+        self.polar_coord_tup = self.fuse.Update(self.vect_data)
+        #print(self.name,"\n",self.vect_data,"polar_coord_tup",self.polar_coord_tup)
         
     def parse(self):
         super(mpu6050Handler,self).parse()
