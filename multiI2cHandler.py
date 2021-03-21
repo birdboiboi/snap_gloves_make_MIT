@@ -2,6 +2,7 @@ from machine import Pin, I2C
 from samplePinRead import SamplePinRead
 from I2Chandler import I2c_MOD_Single_Soft
 from I2Chandler_mac import I2c_MOD_Single_Hard
+from I2Chandler_for_mpu6050 import mpu6050Handler
 from classHandler import ClassHandler
 import time
 
@@ -51,7 +52,7 @@ class I2c_MOD_Multi(SamplePinRead):
             #                                            freq = self.freq,
             #                                            byteBuffer = self.byteBuffer))
             #else:
-            self.i2c_list.append(I2c_MOD_Single_Soft(name = name_2_pass,
+            self.i2c_list.append(mpu6050Handler(name = name_2_pass,
                                                         pin_in= add_in,
                                                         pin_out=add_out,
                                                         pull_up = self.pull_up,
@@ -67,6 +68,7 @@ class I2c_MOD_Multi(SamplePinRead):
             #time.sleep_ms(500)
             I2c_mod.Read()
             I2c_mod.toggle_on_off()
+            I2c_mod.parse()
             
     
     def __str__(self):

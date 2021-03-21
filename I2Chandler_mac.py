@@ -12,8 +12,7 @@ class I2c_MOD_Single_Hard(I2c_MOD_Single_Soft):
                  pin_in=[],
                  pull_up=[],
                  pull_down=[],
-                 freq=57600
-                 ,
+                 freq=57600,
                  byteBuffer = 10 ):
         super(I2c_MOD_Single_Hard,self).__init__(name = name,pin_out = pin_out,pin_in =pin_in,pull_up=pull_up,pull_down=pull_down)
         
@@ -23,7 +22,7 @@ class I2c_MOD_Single_Hard(I2c_MOD_Single_Soft):
         self.pull_down = pull_down
         self.freq = freq
         self.Start()
-        self.sda=self.pin_mac_out[0]
+        self.sda=self.pin_mac_in[0]
         self.scl=self.pin_mac_out[0]
         self.ado =  self.pin_mac_out[1]
         self.I2c_object = I2C(0,freq = self.freq)
