@@ -53,7 +53,7 @@ class Server():
                 self.client_list.append(clientStorageFlask.ClientStorageFlask(self.s,addr,c))    
                 print(self.client_list)        
                 self.client_list[idx].send_msg("200 OK")
-                self.client_list[idx].send_msg("stupid follow up")
+                #self.client_list[idx].send_msg("stupid follow up")
                 self.client_list[idx].on_connect()
             
         self.s.close()

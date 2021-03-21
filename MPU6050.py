@@ -4,16 +4,22 @@ import machine
 
 #changed accel() -> imu()
 class imu():
-    def __init__(self, i2c, addr=0x68):
+    def __init__(self, i2c, addr=0x69,handler = None):
         self.iic = i2c
+        print(self.iic.scan())
+        handler.toggle_on_off()
         self.addr = addr
         self.iic.start()
         self.iic.writeto(self.addr, bytearray([107, 0]))
         self.iic.stop()
+        handler.toggle_on_off()
+
 
     def get_raw_values(self):
+        print("read attempt",self.iic.scan())
         self.iic.start()
         a = self.iic.readfrom_mem(self.addr, 0x3B, 14)
+        print
         self.iic.stop()
         return a
 
@@ -30,8 +36,8 @@ class imu():
         return - (((firstbyte ^ 255) << 8) | (secondbyte ^ 255) + 1)
 
     #added passable raw_ints
-    def get_values(self,raw_ints):
-        #raw_ints = self.get_raw_values()
+    def get_values(self):
+        raw_ints = self.get_raw_values()
         vals = {}
         vals["AcX"] = self.bytes_toint(raw_ints[0], raw_ints[1])
         vals["AcY"] = self.bytes_toint(raw_ints[2], raw_ints[3])
