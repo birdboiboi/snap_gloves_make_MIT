@@ -40,6 +40,7 @@ class I2c_MOD_Single_Soft(SamplePinRead):
         print("scan")
         print(self.I2c_object.scan() )
         print("readFrom",self.read_addr) 
+        print(self.I2c_object.read(105, self.byteBuffer) )
         self.data=str(self.I2c_object.readfrom_mem(105,0x3B, self.byteBuffer) ) 
         print(self.data)
     
